@@ -2,7 +2,7 @@ package Log::Stash::STOMP::Role::HasAConnection;
 use Moose::Role;
 use Scalar::Util qw/ weaken /;
 use AnyEvent;
-use AnyEvent::RabbitMQ;
+use AnyEvent::STOMP;
 use namespace::autoclean;
 
 has hostname => (

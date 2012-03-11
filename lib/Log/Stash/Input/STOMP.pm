@@ -4,7 +4,7 @@ use AnyEvent;
 use namespace::autoclean;
 
 with qw/
-    Log::Stash::STOMP::Role::HasAChannel
+    Log::Stash::STOMP::Role::HasAConnection
     Log::Stash::Role::Input
 /;
 

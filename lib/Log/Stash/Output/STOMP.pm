@@ -3,7 +3,7 @@ use Moose;
 use namespace::autoclean;
 
 with qw/
-    Log::Stash::STOMP::Role::DeclaresExchange
+    Log::Stash::STOMP::Role::HasAConnection
     Log::Stash::Role::Output
 /;
 
@@ -15,19 +15,13 @@ sub BUILD {
 sub consume {
     my $self = shift;
     my $data = shift;
-    unless ($self->_exchange) {
-        warn("No exchange yet, dropping message");
-        return;
-    }
     my $bytes = $self->encode($data);
-    my $routing_key = '#';
-    $self->_channel->publish(
-        body => $bytes,
-        exchange => $self->exchange_name,
-        routing_key => $routing_key,
-    );
+    my $destination = '/topic/foo';
+    my $headers = undef;
+    $self->_connection->send($bytes, $destination, $headers);
 }
 
+__PACKAGE__->meta->make_immutable;
 1;
 
 =head1 NAME

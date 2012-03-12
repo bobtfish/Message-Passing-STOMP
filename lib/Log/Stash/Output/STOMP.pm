@@ -18,6 +18,7 @@ sub consume {
     my $bytes = $self->encode($data);
     my $destination = '/topic/foo';
     my $headers = undef;
+    warn("SEND $bytes");
     $self->_connection->send($bytes, $destination, $headers);
 }
 

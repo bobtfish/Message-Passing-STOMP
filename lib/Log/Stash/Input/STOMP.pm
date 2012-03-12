@@ -1,6 +1,7 @@
 package Log::Stash::Input::STOMP;
 use Moose;
 use AnyEvent;
+use Scalar::Util qw/ weaken /;
 use namespace::autoclean;
 
 with qw/
@@ -8,7 +9,23 @@ with qw/
     Log::Stash::Role::Input
 /;
 
+sub BUILD {
+    my $self = shift;
+    $self->_connection;
+}
 
+after connected => sub {
+    my ($self, $client) = @_;
+    weaken($self);
+    warn("INPUT $self");
+    $client->reg_cb(MESSAGE => sub {
+        my (undef, $body, $headers) = @_;
+        warn("MESSAGE");
+        $self->output_to->consume($self->decode($body));
+    });
+};
+
+__PACKAGE__->meta->make_immutable;
 1;
 
 =head1 NAME

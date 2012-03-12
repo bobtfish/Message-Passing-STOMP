@@ -29,16 +29,28 @@ has [qw/ username password /] => (
     default => 'guest',
 );
 
+sub connected {}
+
 has _connection => (
     is => 'ro',
     lazy => 1,
     default => sub {
         my $self = shift;
-        AnyEvent::STOMP->connect(
+        weaken($self);
+        warn("MOO $self");
+        my $client = AnyEvent::STOMP->connect(
             $self->hostname, $self->port, $self->ssl, undef, undef,
             {},
-            {},
+            {
+                '/topic/foo' => 1,
+            },
         );
+        $client->reg_cb(connect => sub {
+            my ($client, $handle, $host, $port, $retry) = @_;
+            warn("CONNECTED");
+            $self->connected($client);
+        });
+        return $client;
     },
     clearer => '_clear_connection',
 );

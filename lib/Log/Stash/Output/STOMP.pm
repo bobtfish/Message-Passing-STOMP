@@ -12,6 +12,15 @@ sub BUILD {
     $self->_connection;
 }
 
+sub connected2 {
+    my $self = shift;
+    $self->_connection->reg_cb(connect => sub {
+        my ($client, $handle, $host, $port, $retry) = @_;
+        warn("CONNECTED");
+        $self->connected($client);
+    });
+}
+
 sub consume {
     my $self = shift;
     my $data = shift;

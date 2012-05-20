@@ -14,6 +14,8 @@ sub BUILD {
     $self->_connection;
 }
 
+sub destination { '/topic/foo' }
+
 after connected => sub {
     my ($self, $client) = @_;
     weaken($self);

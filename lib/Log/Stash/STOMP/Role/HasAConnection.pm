@@ -14,7 +14,7 @@ has hostname => (
 has port => (
     is => 'ro',
     isa => 'Int',
-    default => 5672,
+    default => 61613,
 );
 
 has ssl => (
@@ -31,6 +31,8 @@ has [qw/ username password /] => (
 
 sub connected {}
 
+sub destination { undef }
+
 has _connection => (
     is => 'ro',
     lazy => 1,
@@ -39,16 +41,14 @@ has _connection => (
         weaken($self);
         warn("MOO $self");
         my $client = AnyEvent::STOMP->connect(
-            $self->hostname, $self->port, $self->ssl, undef, undef,
+            $self->hostname, $self->port, $self->ssl, $self->destination, undef,
             {},
-            {
-                '/topic/foo' => 1,
-            },
+            {},
         );
-        $client->reg_cb(connect => sub {
-            my ($client, $handle, $host, $port, $retry) = @_;
-            warn("CONNECTED");
-            $self->connected($client);
+        $client->reg_cb(frame => sub {
+            my ($client, $type, $body, $headers) = @_;
+            use Data::Dumper;
+            warn Dumper({type => $type, body => $body, headers => $headers});
         });
         return $client;
     },

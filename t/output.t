@@ -18,8 +18,10 @@ my $input = Log::Stash::Input::STOMP->new(
 my $cv = AnyEvent->condvar;
 my $timer; $timer = AnyEvent->timer(after => 2, cb => sub { undef $timer; $cv->send });
 $cv->recv;
-warn("SENT");
-$output->consume({foo => 'bar'});
+my $t2; $t2 = AnyEvent->timer(after => 2, interval => 2, cb => sub {
+    warn("SENT");
+    $output->consume({foo => 'bar'});
+});
 
 $got_cv->recv;
 

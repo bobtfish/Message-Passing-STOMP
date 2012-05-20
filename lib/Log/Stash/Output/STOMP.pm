@@ -12,22 +12,17 @@ sub BUILD {
     $self->_connection;
 }
 
-sub connected2 {
+sub connected {
     my $self = shift;
-    $self->_connection->reg_cb(connect => sub {
-        my ($client, $handle, $host, $port, $retry) = @_;
-        warn("CONNECTED");
-        $self->connected($client);
-    });
 }
 
 sub consume {
     my $self = shift;
     my $data = shift;
     my $bytes = $self->encode($data);
-    my $destination = '/topic/foo';
+    my $destination = '/queue/foo';
     my $headers = undef;
-    warn("SEND $bytes");
+    warn("SEND $bytes to $destination");
     $self->_connection->send($bytes, $destination, $headers);
 }
 

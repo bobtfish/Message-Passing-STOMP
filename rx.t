@@ -10,6 +10,7 @@ $stomp->subscribe(
         'activemq.prefetchSize' => 1
     }
 );
+warn "RX /queue/foo";
 while (1) {
   my $frame = $stomp->receive_frame;
   warn $frame->body; # do something here

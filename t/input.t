@@ -5,7 +5,6 @@ use Test::More;
 use AnyEvent;
 use Log::Stash::Input::STOMP;
 use Log::Stash::Output::Test;
-use STOMP qw/:all/;
 
 my $cv = AnyEvent->condvar;
 my $output = Log::Stash::Output::Test->new(

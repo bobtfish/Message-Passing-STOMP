@@ -14,8 +14,9 @@ sub BUILD {
     $self->_connection;
 }
 
-sub destination { '/topic/foo' }
+sub destination { '/queue/foo' }
 
+my $id = 0;
 after connected => sub {
     my ($self, $client) = @_;
     weaken($self);
@@ -25,6 +26,13 @@ after connected => sub {
         warn("MESSAGE");
         $self->output_to->consume($self->decode($body));
     });
+    my $subscribe_headers = {
+        id => $id++,
+        destination => $self->destination,
+        #ack => 'auto',
+    };
+    $client->send_frame('SUBSCRIBE',
+        undef, $subscribe_headers);
 };
 
 __PACKAGE__->meta->make_immutable;

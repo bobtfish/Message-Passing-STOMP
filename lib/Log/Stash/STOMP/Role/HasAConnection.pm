@@ -22,7 +22,7 @@ BEGIN { # For RabbitMQ https://rt.cpan.org/Ticket/Display.html?id=68432
                         $command,
                         join("\n", map { "$_:$headers->{$_}" } keys %$headers),
                         $body);
-
+            warn $frame;
             $self->{handle}->push_write($frame);
         }
     }
@@ -64,7 +64,7 @@ has _connection => (
         weaken($self);
         Carp::cluck("MOO $self");
         my $client = AnyEvent::STOMP->connect(
-            $self->hostname, $self->port, $self->ssl, $self->destination, 0,
+            $self->hostname, $self->port, $self->ssl, undef, 0,
             {
                 'accept-version' => '1.1',
                 host => '/',
@@ -73,10 +73,12 @@ has _connection => (
             },
             {},
         );
-        $client->reg_cb(connect => sub {
+        $client->reg_cb(CONNECTED => -2000 => sub {
             my ($client, $handle, $host, $port, $retry) = @_;
+            use Data::Dumper;
             local $Data::Dumper::Maxdepth = 2;
             warn("CONNECTED " . Data::Dumper::Dumper(\@_));
+            $self->connected($client);
         });
         $client->reg_cb(io_error => sub {
             my ($client, $errmsg) = @_;
@@ -86,11 +88,11 @@ has _connection => (
             my ($client, $errmsg) = @_;
             warn("CONNECT ERROR $errmsg");
         });
-        $client->reg_cb(frame => sub {
-            my ($client, $type, $body, $headers) = @_;
-            use Data::Dumper;
-            warn Dumper({type => $type, body => $body, headers => $headers});
-        });
+        #$client->reg_cb(frame => sub {
+        #    my ($client, $type, $body, $headers) = @_;
+        #    use Data::Dumper;
+            #warn Dumper({type => $type, body => $body, headers => $headers});
+        #});
         return $client;
     },
     clearer => '_clear_connection',

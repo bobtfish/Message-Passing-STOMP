@@ -61,7 +61,6 @@ has _connection => (
     default => sub {
         my $self = shift;
         weaken($self);
-        Carp::cluck("MOO $self");
         my $client = AnyEvent::STOMP->connect(
             $self->hostname, $self->port, $self->ssl, undef, 0,
             {

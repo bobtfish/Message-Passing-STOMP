@@ -20,16 +20,14 @@ my $id = 0;
 after connected => sub {
     my ($self, $client) = @_;
     weaken($self);
-    warn("INPUT $self");
     $client->reg_cb(MESSAGE => sub {
         my (undef, $body, $headers) = @_;
-        warn("MESSAGE");
         $self->output_to->consume($self->decode($body));
     });
     my $subscribe_headers = {
         id => $id++,
         destination => $self->destination,
-        #ack => 'auto',
+        ack => 'auto',
     };
     $client->send_frame('SUBSCRIBE',
         undef, $subscribe_headers);

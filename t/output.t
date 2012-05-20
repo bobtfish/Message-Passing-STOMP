@@ -6,27 +6,28 @@ use AnyEvent;
 use Log::Stash::Input::STOMP;
 use Log::Stash::Output::Test;
 use Log::Stash::Output::STOMP;
+use JSON;
 
-my $output = Log::Stash::Output::STOMP->new(
+use Net::Stomp;
+my $stomp = Net::Stomp->new( { hostname => 'localhost', port => '6163' } );
+$stomp->connect( { login => 'guest', passcode => 'guest' } );
+$stomp->subscribe(
+    {   destination             => '/queue/foo',
+        'ack'                   => 'client',
+        'activemq.prefetchSize' => 1
+    }
 );
-my $got_cv = AnyEvent->condvar;
-my $input = Log::Stash::Input::STOMP->new(
-    output_to => Log::Stash::Output::Test->new(
-        on_consume_cb => sub { $got_cv->send }
-    ),
-);
+
+my $output = Log::Stash::Output::STOMP->new();
 my $cv = AnyEvent->condvar;
-my $timer; $timer = AnyEvent->timer(after => 2, cb => sub { undef $timer; $cv->send });
+my $timer; $timer = AnyEvent->timer(after => 1, cb => sub { undef $timer; $cv->send });
 $cv->recv;
-my $t2; $t2 = AnyEvent->timer(after => 2, interval => 2, cb => sub {
-    warn("SENT");
-    $output->consume({foo => 'bar'});
-});
+$output->consume({foo => 'bar'});
+my $frame = $stomp->receive_frame;
+$stomp->ack( { frame => $frame } );
+$stomp->disconnect;
 
-$got_cv->recv;
-
-is $input->output_to->message_count, 1;
-is_deeply([$input->output_to->messages], [{foo => 'bar'}]);
+is_deeply(decode_json($frame->body), {foo => 'bar'});
 
 done_testing;
 

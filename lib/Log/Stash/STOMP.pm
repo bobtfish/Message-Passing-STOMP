@@ -1,6 +1,6 @@
 package Log::Stash::STOMP;
-use Moose ();
-use namespace::autoclean;
+use Moo ();
+use namespace::clean;
 
 our $VERSION = "0.001";
 $VERSION = eval $VERSION;

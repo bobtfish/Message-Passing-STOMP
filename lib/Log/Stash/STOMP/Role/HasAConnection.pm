@@ -1,10 +1,11 @@
 package Log::Stash::STOMP::Role::HasAConnection;
-use Moose::Role;
+use Moo::Role;
+use MooX::Types::MooseLike::Base qw/ Str Int Bool /;
 use Scalar::Util qw/ weaken /;
 use AnyEvent;
 use AnyEvent::STOMP;
 use Carp qw/ croak /;
-use namespace::autoclean;
+use namespace::clean -except => 'meta';
 
 BEGIN { # For RabbitMQ https://rt.cpan.org/Ticket/Display.html?id=68432
     if ($AnyEvent::STOMP::VERSION <= 0.6) {
@@ -29,26 +30,32 @@ BEGIN { # For RabbitMQ https://rt.cpan.org/Ticket/Display.html?id=68432
 
 has hostname => (
     is => 'ro',
-    isa => 'Str',
-    default => 'localhost',
+    isa => Str,
+    default => sub { 'localhost' },
 );
 
 has port => (
     is => 'ro',
-    isa => 'Int',
-    default => 6163,
+    isa => Int,
+    default => sub { 6163 },
 );
 
 has ssl => (
     is => 'ro',
-    isa => 'Bool',
-    default => 0,
+    isa => Bool,
+    default => sub { 0 },
 );
 
-has [qw/ username password /] => (
+has username => (
     is => 'ro',
-    isa => 'Str',
-    default => 'guest',
+    isa => Str,
+    default => sub { 'guest' },
+);
+
+has password => (
+    is => 'ro',
+    isa => Str,
+    default => sub { 'guest' },
 );
 
 sub connected {}

@@ -6,15 +6,15 @@ all_from 'lib/Log/Stash/STOMP.pm';
 
 license 'AGPL_3';
 
-requires 'Moose';
-requires 'namespace::autoclean';
+requires 'Moo' => '0.091008';
+requires 'namespace::clean';
 requires 'AnyEvent';
 requires 'AnyEvent::STOMP' => '0.6';
 requires 'JSON';
 requires 'JSON::XS';
 requires 'Try::Tiny';
 requires 'Task::Weaken';
-requires 'Log::Stash' => '0.001';
+requires 'Log::Stash' => '0.002';
 
 test_requires 'Test::More' => '0.88';
 

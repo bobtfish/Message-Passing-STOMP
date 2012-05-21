@@ -1,8 +1,8 @@
 package Log::Stash::Input::STOMP;
-use Moose;
+use Moo;
 use AnyEvent;
 use Scalar::Util qw/ weaken /;
-use namespace::autoclean;
+use namespace::clean -except => 'meta';
 
 with qw/
     Log::Stash::STOMP::Role::HasAConnection
@@ -33,7 +33,6 @@ after connected => sub {
         undef, $subscribe_headers);
 };
 
-__PACKAGE__->meta->make_immutable;
 1;
 
 =head1 NAME

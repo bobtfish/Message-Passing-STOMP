@@ -7,11 +7,6 @@ with qw/
     Log::Stash::Role::Output
 /;
 
-sub BUILD {
-    my $self = shift;
-    $self->_connection;
-}
-
 sub connected {
     my $self = shift;
 }
@@ -23,7 +18,7 @@ sub consume {
     my $destination = '/queue/foo';
     my $headers = undef;
     warn("SEND $bytes to $destination");
-    $self->_connection->send($bytes, $destination, $headers);
+    $self->connection->connection->send($bytes, $destination, $headers);
 }
 
 __PACKAGE__->meta->make_immutable;

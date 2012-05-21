@@ -9,15 +9,10 @@ with qw/
     Log::Stash::Role::Input
 /;
 
-sub BUILD {
-    my $self = shift;
-    $self->_connection;
-}
-
 sub destination { '/queue/foo' }
 
 my $id = 0;
-after connected => sub {
+sub connected {
     my ($self, $client) = @_;
     weaken($self);
     $client->reg_cb(MESSAGE => sub {
@@ -31,7 +26,7 @@ after connected => sub {
     };
     $client->send_frame('SUBSCRIBE',
         undef, $subscribe_headers);
-};
+}
 
 __PACKAGE__->meta->make_immutable;
 1;

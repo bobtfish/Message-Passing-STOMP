@@ -28,7 +28,7 @@ has [qw/ username password /] => (
 
 with 'Message::Passing::Role::HasAConnection';
 use Message::Passing::STOMP::ConnectionManager;
-sub _build_connection {
+sub _build_connection_manager {
     my $self = shift;
     Message::Passing::STOMP::ConnectionManager->new(map { $_ => $self->$_() }
         qw/ username password ssl hostname /

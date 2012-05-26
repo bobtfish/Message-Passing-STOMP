@@ -1,4 +1,4 @@
-package Log::Stash::STOMP::ConnectionManager;
+package Message::Passing::STOMP::ConnectionManager;
 use Moose;
 use Scalar::Util qw/ weaken /;
 use AnyEvent;
@@ -27,7 +27,7 @@ BEGIN { # For RabbitMQ https://rt.cpan.org/Ticket/Display.html?id=68432
     }
 }
 
-with 'Log::Stash::Role::ConnectionManager';
+with 'Message::Passing::Role::ConnectionManager';
 
 has hostname => (
     is => 'ro',
@@ -88,14 +88,14 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Log::Stash::STOMP::ConnectionManager - Wraps an AnyEvent::STOMP connection.
+Message::Passing::STOMP::ConnectionManager - Wraps an AnyEvent::STOMP connection.
 
 =head1 ATTRIBUTES
 
 
 =head1 AUTHOR, COPYRIGHT AND LICENSE
 
-See L<Log::Stash::STOMP>.
+See L<Message::Passing::STOMP>.
 
 =cut
 

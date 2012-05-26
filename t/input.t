@@ -10,14 +10,14 @@ $stomp->send(
 $stomp->disconnect;
 
 use AnyEvent;
-use Log::Stash::Input::STOMP;
-use Log::Stash::Output::Test;
+use Message::Passing::Input::STOMP;
+use Message::Passing::Output::Test;
 
 my $cv = AnyEvent->condvar;
-my $output = Log::Stash::Output::Test->new(
+my $output = Message::Passing::Output::Test->new(
     cb => sub { $cv->send },
 );
-my $input = Log::Stash::Input::STOMP->new(
+my $input = Message::Passing::Input::STOMP->new(
     output_to => $output,
 );
 ok $input;

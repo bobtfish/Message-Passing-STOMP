@@ -1,5 +1,5 @@
 NAME
-    Log::Stash::STOMP - input and output logstash messages to ZeroMQ.
+    Message::Passing::STOMP - input and output logstash messages to ZeroMQ.
 
 SYNOPSIS
         # Terminal 1:
@@ -11,12 +11,12 @@ SYNOPSIS
         {"data":{"some":"data"},"@metadata":"value"}
 
 DESCRIPTION
-    A AnyEvent::STOMP transport for Log::Stash.
+    A AnyEvent::STOMP transport for Message::Passing.
 
 SEE ALSO
-    Log::Stash::Output::STOMP
-    Log::Stash::Input::STOMP
-    Log::Stash
+    Message::Passing::Output::STOMP
+    Message::Passing::Input::STOMP
+    Message::Passing
     AnyEvent::STOMP
 
 AUTHOR

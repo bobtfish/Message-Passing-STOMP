@@ -1,4 +1,4 @@
-package Log::Stash::STOMP::Role::HasAConnection;
+package Message::Passing::STOMP::Role::HasAConnection;
 use Moose::Role;
 use namespace::autoclean;
 
@@ -26,11 +26,11 @@ has [qw/ username password /] => (
     default => 'guest',
 );
 
-with 'Log::Stash::Role::HasAConnection';
-use Log::Stash::STOMP::ConnectionManager;
+with 'Message::Passing::Role::HasAConnection';
+use Message::Passing::STOMP::ConnectionManager;
 sub _build_connection {
     my $self = shift;
-    Log::Stash::STOMP::ConnectionManager->new(map { $_ => $self->$_() }
+    Message::Passing::STOMP::ConnectionManager->new(map { $_ => $self->$_() }
         qw/ username password ssl hostname /
     );
 }
@@ -39,14 +39,14 @@ sub _build_connection {
 
 =head1 NAME
 
-Log::Stash::STOMP::HasAConnection - Role for instances which have a connection to a STOMP server.
+Message::Passing::STOMP::HasAConnection - Role for instances which have a connection to a STOMP server.
 
 =head1 ATTRIBUTES
 
 
 =head1 AUTHOR, COPYRIGHT AND LICENSE
 
-See L<Log::Stash::STOMP>.
+See L<Message::Passing::STOMP>.
 
 =cut
 

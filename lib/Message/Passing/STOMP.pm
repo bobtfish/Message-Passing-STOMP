@@ -1,4 +1,4 @@
-package Log::Stash::STOMP;
+package Message::Passing::STOMP;
 use Moose ();
 use namespace::autoclean;
 
@@ -9,7 +9,7 @@ $VERSION = eval $VERSION;
 
 =head1 NAME
 
-Log::Stash::STOMP - input and output logstash messages to ZeroMQ.
+Message::Passing::STOMP - input and output logstash messages to ZeroMQ.
 
 =head1 SYNOPSIS
 
@@ -23,17 +23,17 @@ Log::Stash::STOMP - input and output logstash messages to ZeroMQ.
 
 =head1 DESCRIPTION
 
-A L<AnyEvent::STOMP> transport for L<Log::Stash>.
+A L<AnyEvent::STOMP> transport for L<Message::Passing>.
 
 =head1 SEE ALSO
 
 =over
 
-=item L<Log::Stash::Output::STOMP>
+=item L<Message::Passing::Output::STOMP>
 
-=item L<Log::Stash::Input::STOMP>
+=item L<Message::Passing::Input::STOMP>
 
-=item L<Log::Stash>
+=item L<Message::Passing>
 
 =item L<AnyEvent::STOMP>
 

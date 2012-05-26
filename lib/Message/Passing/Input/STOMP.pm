@@ -1,12 +1,12 @@
-package Log::Stash::Input::STOMP;
+package Message::Passing::Input::STOMP;
 use Moose;
 use AnyEvent;
 use Scalar::Util qw/ weaken /;
 use namespace::autoclean;
 
 with qw/
-    Log::Stash::STOMP::Role::HasAConnection
-    Log::Stash::Role::Input
+    Message::Passing::STOMP::Role::HasAConnection
+    Message::Passing::Role::Input
 /;
 
 sub destination { '/queue/foo' }
@@ -33,7 +33,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Log::Stash::Input::STOMP - input logstash messages from ZeroMQ.
+Message::Passing::Input::STOMP - input logstash messages from ZeroMQ.
 
 =head1 DESCRIPTION
 
@@ -41,11 +41,11 @@ Log::Stash::Input::STOMP - input logstash messages from ZeroMQ.
 
 =over
 
-=item L<Log::Stash::STOMP>
+=item L<Message::Passing::STOMP>
 
-=item L<Log::Stash::Output::STOMP>
+=item L<Message::Passing::Output::STOMP>
 
-=item L<Log::Stash>
+=item L<Message::Passing>
 
 =item L<STOMP>
 
@@ -63,7 +63,7 @@ the SureVoIP API -
 
 =head1 AUTHOR, COPYRIGHT AND LICENSE
 
-See L<Log::Stash>.
+See L<Message::Passing>.
 
 =cut
 

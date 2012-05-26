@@ -1,10 +1,10 @@
-package Log::Stash::Output::STOMP;
+package Message::Passing::Output::STOMP;
 use Moose;
 use namespace::autoclean;
 
 with qw/
-    Log::Stash::STOMP::Role::HasAConnection
-    Log::Stash::Role::Output
+    Message::Passing::STOMP::Role::HasAConnection
+    Message::Passing::Role::Output
 /;
 
 sub connected {
@@ -26,17 +26,17 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Log::Stash::Output::STOMP - output logstash messages to ZeroMQ.
+Message::Passing::Output::STOMP - output logstash messages to ZeroMQ.
 
 =head1 SYNOPSIS
 
-    use Log::Stash::Output::STOMP;
+    use Message::Passing::Output::STOMP;
 
-    my $logger = Log::Stash::Output::STOMP->new;
+    my $logger = Message::Passing::Output::STOMP->new;
     $logger->consume({data => { some => 'data'}, '@metadata' => 'value' });
 
     # You are expected to produce a logstash message format compatible message,
-    # see the documentation in Log::Stash for more details.
+    # see the documentation in Message::Passing for more details.
 
     # Or use directly on command line:
     logstash --input STDIN --output STOMP
@@ -44,7 +44,7 @@ Log::Stash::Output::STOMP - output logstash messages to ZeroMQ.
 
 =head1 DESCRIPTION
 
-A L<Log::Stash> L<AnyEvent::RabbitMQ> output class.
+A L<Message::Passing> L<AnyEvent::RabbitMQ> output class.
 
 Can be used as part of a chain of classes with the L<logstash> utility, or directly as
 a logger in normal perl applications.
@@ -63,11 +63,11 @@ Sends a message.
 
 =over
 
-=item L<Log::Stash::STOMP>
+=item L<Message::Passing::STOMP>
 
-=item L<Log::Stash::Input::STOMP>
+=item L<Message::Passing::Input::STOMP>
 
-=item L<Log::Stash>
+=item L<Message::Passing>
 
 =item L<STOMP>
 
@@ -85,7 +85,7 @@ the SureVoIP API -
 
 =head1 AUTHOR, COPYRIGHT AND LICENSE
 
-See L<Log::Stash>.
+See L<Message::Passing>.
 
 =cut
 

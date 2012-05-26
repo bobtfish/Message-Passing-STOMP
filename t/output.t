@@ -3,9 +3,9 @@ use warnings;
 use Test::More;
 
 use AnyEvent;
-use Log::Stash::Input::STOMP;
-use Log::Stash::Output::Test;
-use Log::Stash::Output::STOMP;
+use Message::Passing::Input::STOMP;
+use Message::Passing::Output::Test;
+use Message::Passing::Output::STOMP;
 use JSON;
 
 use Net::Stomp;
@@ -18,7 +18,7 @@ $stomp->subscribe(
     }
 );
 
-my $output = Log::Stash::Output::STOMP->new();
+my $output = Message::Passing::Output::STOMP->new();
 my $cv = AnyEvent->condvar;
 my $timer; $timer = AnyEvent->timer(after => 1, cb => sub { undef $timer; $cv->send });
 $cv->recv;

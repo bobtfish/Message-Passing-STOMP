@@ -26,19 +26,10 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Message::Passing::Output::STOMP - output logstash messages to ZeroMQ.
+Message::Passing::Output::STOMP - output messages to STOMP.
 
 =head1 SYNOPSIS
 
-    use Message::Passing::Output::STOMP;
-
-    my $logger = Message::Passing::Output::STOMP->new;
-    $logger->consume({data => { some => 'data'}, '@metadata' => 'value' });
-
-    # You are expected to produce a logstash message format compatible message,
-    # see the documentation in Message::Passing for more details.
-
-    # Or use directly on command line:
     logstash --input STDIN --output STOMP
     {"data":{"some":"data"},"@metadata":"value"}
 
@@ -48,10 +39,6 @@ A L<Message::Passing> L<AnyEvent::RabbitMQ> output class.
 
 Can be used as part of a chain of classes with the L<logstash> utility, or directly as
 a logger in normal perl applications.
-
-=head1 CAVEAT
-
-You cannot send STOMP messages and then call fork() and send more ZeroMQ messages!
 
 =head1 METHODS
 

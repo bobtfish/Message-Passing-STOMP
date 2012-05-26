@@ -9,16 +9,16 @@ $VERSION = eval $VERSION;
 
 =head1 NAME
 
-Message::Passing::STOMP - input and output logstash messages to ZeroMQ.
+Message::Passing::STOMP - input and output messages to STOMP.
 
 =head1 SYNOPSIS
 
     # Terminal 1:
-    $ logstash --input STDIN --output STOMP --output_options '{"connect":"tcp://127.0.0.1:5558"}'
+    $ logstash --input STDIN --output STOMP --output_options '{"FIXME"}'
     {"data":{"some":"data"},"@metadata":"value"}
 
     # Terminal 2:
-    $ logstash --output STDOUT --input STOMP --input_options '{"socket_bind":"tcp://*:5558"}'
+    $ logstash --output STDOUT --input STOMP --input_options '{"FIXME"}'
     {"data":{"some":"data"},"@metadata":"value"}
 
 =head1 DESCRIPTION

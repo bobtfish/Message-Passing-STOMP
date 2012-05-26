@@ -33,7 +33,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Message::Passing::Input::STOMP - input logstash messages from ZeroMQ.
+Message::Passing::Input::STOMP - input messages from a STOMP queue.
 
 =head1 DESCRIPTION
 
